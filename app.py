@@ -93,6 +93,8 @@ if st.button("Generate Strategic Recommendations"):
     # Parse the results
     outputs = utils.parse_json_string(results['messages'][-1].content)
 
+    # print(f"JSON outputs: {outputs}")
+
 
     # 3) Diagnostics Summary
     st.subheader("Strategic Diagnostic")
@@ -105,8 +107,9 @@ if st.button("Generate Strategic Recommendations"):
     st.subheader("Strategic Recommendations")
     for i, srec in enumerate(outputs['strategic_recommendations']):
         st.markdown(f"### {i+1}. {srec['recommendation']['title']}")
+        st.markdown(f"**Priority**: {srec['recommendation']['priority']}")
         st.write(f"{srec['recommendation']['description']}")
-        st.markdown(f"**References: **")
+        st.markdown(f"**References**: ")
         for ref in srec['references']:
             st.markdown(f"- {ref}")
     # for rec in result["recommendations"]:
