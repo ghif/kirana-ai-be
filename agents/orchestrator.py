@@ -55,7 +55,7 @@ Structure your final answer as a single JSON object with the following keys: "st
 
 Always response in two-section format:
 - "strategic_diagnostic": A concise and informative one-paragraph summary of strategic diagnostics for a specific country.
-- "strategic_recommendations": A list of 3 to 5 concrete, actionable policy recommendations. For each recommendation, provide the list of reference documents supporting the recommendation and assign the priority (high, medium, low) to each recommendation.
+- "strategic_recommendations": A list of 3 to 5 concrete, actionable policy recommendations. For each recommendation, provide the list of reference documents supporting the recommendation and assign the priority (critical, high, medium, low) to each recommendation.
 
 Example JSON format:
 {{

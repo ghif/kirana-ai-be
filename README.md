@@ -54,7 +54,7 @@ python -m pip install -r requirements.txt
 
 ```bash
 GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
-TAVILTY_API_KEY="YOUR_TAVILY_API_KEY"
+TAVILY_API_KEY="YOUR_TAVILY_API_KEY"
 ```
 
 5. __Run the Streamlit application:
