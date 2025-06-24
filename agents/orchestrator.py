@@ -144,7 +144,7 @@ def run_diagnostics(inputs):
         user_prompt += f" with additional context: {inputs['add_context']}"
 
     # Use the agent
-    config = {"configurable": {"thread_id": "abc123"}}
+    config = {"configurable": {"thread_id": "abc123"}} # will be useful for session memory and async execution
 
     input_message = {
         "role": "user",
@@ -154,6 +154,8 @@ def run_diagnostics(inputs):
     results = agent_executor.invoke(
         {"messages": [input_message]}, config
     )
+
+    # Uncomment the following lines if you want to stream the results
     # result = ""
     # for step in agent_executor.stream(
     #     {"messages": [input_message]}, config, stream_mode="values"
@@ -161,53 +163,6 @@ def run_diagnostics(inputs):
     #     result += step["messages"][-1].content + "\n"
 
     return results
-
-# # Create an agent
-# model = init_chat_model("gemini-2.5-flash", model_provider="google-genai")
-# search = TavilySearch(
-#     max_results=3,
-#     include_answer=True
-# )
-# tools = [search]
-
-# system_prompt = ChatPromptTemplate.from_messages(
-#     [
-#         ("system", SYSTEM_PROMPT),
-#         MessagesPlaceholder(variable_name="messages"),
-#     ]
-# )
-# agent_executor = create_react_agent(
-#     model, 
-#     tools,
-#     prompt=system_prompt
-# )
-
-# country = "Indonesia"
-# approach = "Address Most Urgent Priorities"
-# priority = "Equity and Inclusion"
-# additional_context = None
-
-# user_prompt = f"Run a diagnostic for the country of {country}"
-
-# if approach is not None:
-#     user_prompt += f" with the strategic approach {approach}"
-# if priority is not None:
-#     user_prompt += f" focusing on the priority area of {priority}"
-# if additional_context is not None:
-#     user_prompt += f" with additional context: {additional_context}"
-
-# # Use the agent
-# config = {"configurable": {"thread_id": "abc123"}}
-
-
-# input_message = {
-#     "role": "user",
-#     "content": user_prompt,
-# }
-# for step in agent_executor.stream(
-#     {"messages": [input_message]}, config, stream_mode="values"
-# ):
-#     step["messages"][-1].pretty_print()
 
 if __name__ == "__main__":
     # Example usage

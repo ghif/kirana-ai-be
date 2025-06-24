@@ -57,7 +57,7 @@ GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
 TAVILY_API_KEY="YOUR_TAVILY_API_KEY"
 ```
 
-5. __Run the Streamlit application:
+5. __Run the Streamlit application__:
 ```bash
 streamlit run app.py
 ```
