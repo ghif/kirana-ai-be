@@ -210,7 +210,6 @@ def run_diagnostics(inputs):
 
    return results
 
-
 if __name__ == "__main__":
    # Example usage
    inputs = {
