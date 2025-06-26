@@ -109,6 +109,8 @@ if st.button("Generate Strategic Recommendations"):
         st.markdown(f"### {i+1}. {srec['recommendation']['title']}")
         st.markdown(f"**Priority**: {srec['recommendation']['priority']}")
         st.write(f"{srec['recommendation']['description']}")
+        st.write(f"**Key performance indicator**: {srec['recommendation']['key_performance_indicators']}")
+        st.write(f"**Cross sectoral linkages**: {srec['recommendation']['cross_sectoral_linkages']}")
         st.markdown(f"**References**: ")
         for ref in srec['references']:
             st.markdown(f"- {ref}")
