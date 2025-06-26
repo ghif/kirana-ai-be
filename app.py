@@ -109,9 +109,46 @@ if st.button("Generate Strategic Recommendations"):
         st.markdown(f"### {i+1}. {srec['recommendation']['title']}")
         st.markdown(f"**Priority**: {srec['recommendation']['priority']}")
         st.write(f"{srec['recommendation']['description']}")
+        st.write(f"**Key performance indicator**: {srec['recommendation']['key_performance_indicators']}")
+        st.write(f"**Cross sectoral linkages**: {srec['recommendation']['cross_sectoral_linkages']}")
         st.markdown(f"**References**: ")
         for ref in srec['references']:
             st.markdown(f"- {ref}")
+    # for rec in result["recommendations"]:
+    #     st.markdown(f"### {rec['title']}  ·  _{rec['priority']}_")
+    #     st.markdown(f"**Type:** {rec['type']}")
+    #     st.markdown(f"**Strategic Rationale:**\n>{rec['rationale']}")
+    #     st.markdown(f"**Implementation Approach:**\n{rec['implementation']}")
+    #     st.markdown(f"**Timeline:** {rec['timeline']}")
+
+    #     # Best practices
+    #     st.markdown("**Best Practices from Similar Contexts**")
+    #     for bp in rec["best_practices"]:
+    #         st.markdown(
+    #             f"- **{bp['title']}** ({bp['location']}): {bp['outcome']}  "
+    #             f"[View Report]({bp['link']})"
+    #         )
+
+    #     # Academic research
+    #     st.markdown("**Supporting Academic Research**")
+    #     for paper in rec["papers"]:
+    #         st.markdown(
+    #             f"- **{paper['title']}**, {paper['authors']} • {paper['journal']}  "
+    #             f"_Key Finding:_ {paper['key_finding']}  "
+    #             f"[Read Paper]({paper['link']})"
+    #         )
+
+    #     # Takeaways
+    #     st.markdown("**Key Takeaways**")
+    #     for tk in rec["takeaways"]:
+    #         st.markdown(f"- {tk}")
+
+    #     # Action items
+    #     st.markdown("**Key Action Items**")
+    #     for action in rec["action_items"]:
+    #         st.markdown(f"- {action}")
+
+    #     st.markdown("---")
 
     # 5) Footer buttons
     col1, col2, col3 = st.columns(3)
