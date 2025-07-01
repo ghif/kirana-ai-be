@@ -156,7 +156,6 @@ if st.button("Generate Strategic Recommendations"):
     #     for ref in srec['references']:
     #         st.markdown(f"- {ref}")
 
-
     # 5) Footer buttons
     col1, col2, col3 = st.columns(3)
     # with col1:
