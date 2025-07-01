@@ -93,7 +93,7 @@ if st.button("Generate Strategic Recommendations"):
     # Parse the results
     outputs = utils.parse_json_string(results['messages'][-1].content)
 
-    # print(f"JSON outputs: {outputs}")
+    print(f"JSON outputs {outputs.keys()}: {outputs}")
 
 
     # 3) Diagnostics Summary
@@ -106,14 +106,55 @@ if st.button("Generate Strategic Recommendations"):
     # 4) Detailed Recommendations
     st.subheader("Strategic Recommendations")
     for i, srec in enumerate(outputs['strategic_recommendations']):
-        st.markdown(f"### {i+1}. {srec['recommendation']['title']}")
-        st.markdown(f"**Priority**: {srec['recommendation']['priority']}")
-        st.write(f"{srec['recommendation']['description']}")
-        st.write(f"**Key performance indicator**: {srec['recommendation']['key_performance_indicators']}")
-        st.write(f"**Cross sectoral linkages**: {srec['recommendation']['cross_sectoral_linkages']}")
-        st.markdown(f"**References**: ")
-        for ref in srec['references']:
+        # recommendation = srec['recommendation']
+        
+        # Title and Priority
+        st.markdown(f"### {i+1}. {srec['title']}")
+        st.markdown(f"**Priority**: {srec['priority']}")
+        st.write(f"{srec['description']}")
+        
+        # Best Practices
+        st.markdown("**Best Practices from Similar Contexts**")
+        for bp in srec.get('best_practices', []):
+            st.markdown(
+                f"- **{bp['title']}** ({bp['location']}): {bp['outcome']}  \n"
+                f" Source: {bp['reference']}"
+                # f"[View Report]({bp['reference']})"
+            )
+        
+        # Lessons Learned
+        st.markdown("**Lessons Learned from Failure Cases**")
+        for ll in srec.get('lesson_learned', []):
+            st.markdown(
+                f"- **{ll['title']}** ({ll['location']}): {ll['outcome']}  \n"
+                f" Source: {bp['reference']}"
+                # f"[View Report]({ll['reference']})"
+            )
+
+        # Key Performance Indicators and Cross-Sectoral Linkages
+        st.write(f"**Key performance indicator**: {srec['key_performance_indicators']}")
+        st.write(f"**Cross sectoral linkages**: {srec['cross_sectoral_linkages']}")
+        
+        # Supporting References
+        st.markdown("**Supporting Academic Research**")
+        for ref in srec["supporting_references"]:
             st.markdown(f"- {ref}")
+        
+        st.markdown("---")
+    
+
+    # # 4) Detailed Recommendations
+    # st.subheader("Strategic Recommendations")
+    # for i, srec in enumerate(outputs['strategic_recommendations']):
+    #     st.markdown(f"### {i+1}. {srec['recommendation']['title']}")
+    #     st.markdown(f"**Priority**: {srec['recommendation']['priority']}")
+    #     st.write(f"{srec['recommendation']['description']}")
+
+    #     st.write(f"**Key performance indicator**: {srec['recommendation']['key_performance_indicators']}")
+    #     st.write(f"**Cross sectoral linkages**: {srec['recommendation']['cross_sectoral_linkages']}")
+    #     st.markdown(f"**References**: ")
+    #     for ref in srec['references']:
+    #         st.markdown(f"- {ref}")
 
     # 5) Footer buttons
     col1, col2, col3 = st.columns(3)
