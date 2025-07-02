@@ -175,7 +175,6 @@ def is_valid_input(key, inputs):
    """
    return inputs.get(key) is not None and inputs[key] != "" and inputs[key] != []
 
-
 def run_diagnostics(inputs):
    """
    Run diagnostics for a given country with optional approach and priority.
@@ -251,16 +250,99 @@ def run_diagnostics(inputs):
 
    return results
 
+
+# inputs = {
+#                 "country": st.session_state.country,
+#                 "planned_reforms": planned,
+#                 "expected_outcome": outcome,
+#                 "add_context": context, (optional)
+#                 "strategy": strategy (optional)
+#             }
+def run_diagnostics_with_planned_reforms(inputs):
+    """
+    Run diagnostics for a given country with planned reforms and expected outcomes.
+
+
+    Args:
+        inputs (dict): A dictionary containing the inputs for diagnostics {'country', 'planned_reforms', 'expected_outcome', 'add_context', 'strategy'}.
+
+
+    Returns:
+        results (dict): The diagnostics result.
+    """
+    # Create an agent
+    model = init_chat_model("gemini-2.5-flash", model_provider="google-genai")
+    search = TavilySearch(
+        max_results=5,
+        include_answer=True
+    )
+    tools = [search]
+
+
+    system_prompt = ChatPromptTemplate.from_messages(
+        [
+            ("system", SYSTEM_PROMPT_JSON),
+            MessagesPlaceholder(variable_name="messages"),
+        ]
+    )
+    agent_executor = create_react_agent(
+        model,
+        tools,
+        prompt=system_prompt
+    )
+
+
+    user_prompt = f"Run a diagnostic for the country of {inputs['country']}"
+
+
+    if is_valid_input("planned_reforms", inputs):
+        user_prompt += f" with planned reforms: {', '.join(inputs['planned_reforms'])}"
+    if is_valid_input("expected_outcome", inputs):
+        user_prompt += f" with expected outcome: {inputs['expected_outcome']}"
+    if is_valid_input("add_context", inputs):
+        user_prompt += f" with additional context: {inputs['add_context']}"
+    if is_valid_input("strategy", inputs):
+        user_prompt += f" using the strategic approach: {inputs['strategy']}"
+
+
+    # Use the agent
+    config = {"configurable": {"thread_id": "abc123"}}  # will be useful for session memory and async execution
+
+
+    input_message = {
+        "role": "user",
+        "content": user_prompt,
+    }
+  
+    results = agent_executor.invoke(
+        {"messages": [input_message]}, config
+    )
+
+
+    return results
+
+
 if __name__ == "__main__":
     # Example usage
+    # inputs = {
+    #     "country": "Indonesia",
+    #     "approach": "Address Most Urgent Priorities",
+    #     "priority": "Learning Performance",
+    #     "pol_reform": "Curriculum Reform",
+    #     "add_context": None
+    # }
+
+
+    # results = run_diagnostics(inputs)
+    # print(results)  # Print the diagnostics result
+
     inputs = {
         "country": "Indonesia",
-        "approach": "Address Most Urgent Priorities",
-        "priority": "Learning Performance",
-        "pol_reform": "Curriculum Reform",
-        "add_context": None
+        "planned_reforms": ["Curriculum Reform", "Teacher Reform"],
+        "expected_outcome": "Improved student literacy rates",
+        "add_context": None,
+        "strategy": "Amplify Existing Strengths"
     }
 
-
-    results = run_diagnostics(inputs)
+    results = run_diagnostics_with_planned_reforms(inputs)
     print(results)  # Print the diagnostics result
