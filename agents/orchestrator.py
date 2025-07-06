@@ -28,6 +28,7 @@ You have a four types of approach in providing the recommendations:
 
 
 Follow the guidelines below:
+- Language: Respond exclusively based on the selected languages.
 - Evidence-Based Analysis: All diagnostic insights and recommendations must be rigorously supported by data, research, and recognized educational best practices. Avoid speculative or unverified claims.
 - Contextual Relevance: Tailor all recommendations to the specific socio-economic, cultural, and political context of the target country.
 - Systemic Perspective: Recommendations should consider the interconnectedness of various components within the education system (e.g., curriculum, teacher development, governance, finance, equity).
@@ -35,7 +36,6 @@ Follow the guidelines below:
 - Clarity and Precision: Use clear, unambiguous language suitable for high-level policy discourse.
 - Non-Hallucination: Strictly avoid generating any information not derived from the provided context or general expert knowledge.
 - References: Use only valid and scientific references from reputable sources, avoid using public blogs.
-- Language: Respond exclusively in English.
 - Tone: Maintain a formal, analytical, and authoritative scientific tone throughout.
 
 
@@ -264,7 +264,7 @@ def run_diagnostics_with_planned_reforms(inputs):
 
 
     Args:
-        inputs (dict): A dictionary containing the inputs for diagnostics {'country', 'planned_reforms', 'expected_outcome', 'add_context', 'strategy'}.
+        inputs (dict): A dictionary containing the inputs for diagnostics {'country', 'planned_reforms', 'expected_outcome', 'add_context', 'strategy', 'language'}.
 
 
     Returns:
@@ -294,7 +294,8 @@ def run_diagnostics_with_planned_reforms(inputs):
 
     user_prompt = f"Run a diagnostic for the country of {inputs['country']}"
 
-
+    if is_valid_input("language", inputs):
+        user_prompt += f" in {inputs['language']} language"
     if is_valid_input("planned_reforms", inputs):
         user_prompt += f" with planned reforms: {', '.join(inputs['planned_reforms'])}"
     if is_valid_input("expected_outcome", inputs):
@@ -341,7 +342,8 @@ if __name__ == "__main__":
         "planned_reforms": ["Curriculum Reform", "Teacher Reform"],
         "expected_outcome": "Improved student literacy rates",
         "add_context": None,
-        "strategy": "Amplify Existing Strengths"
+        "strategy": "Amplify Existing Strengths",
+        "language": "English"
     }
 
     results = run_diagnostics_with_planned_reforms(inputs)

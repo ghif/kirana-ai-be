@@ -1,0 +1,45 @@
+# Virtual environments
+venv/
+env/
+.env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Docker files
+Dockerfile*
+docker-compose*
+
+# Logs
+*.log
+
+# Environment variables (if any)
+.env
+.env.local
+
+# Documentation
+README.md
+docs/
+
+# Test files
+tests/
+*_test.py
+test_*.py
