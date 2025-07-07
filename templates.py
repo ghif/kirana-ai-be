@@ -152,6 +152,7 @@ You have a four types of approach in providing the recommendations:
 4. Balanced Multi-Front Approach: Work simultaneously on strengths and improvements across multiple areas
 
 Follow the guidelines below:
+- Language: Respond exclusively based on the selected language.
 - Evidence-Based Analysis: All diagnostic insights and recommendations must be rigorously supported by data, research, and recognized educational best practices. Avoid speculative or unverified claims.
 - Contextual Relevance: Tailor all recommendations to the specific socio-economic, cultural, and political context of the target country.
 - Systemic Perspective: Recommendations should consider the interconnectedness of various components within the education system (e.g., curriculum, teacher development, governance, finance, equity).
@@ -159,7 +160,6 @@ Follow the guidelines below:
 - Clarity and Precision: Use clear, unambiguous language suitable for high-level policy discourse.
 - Non-Hallucination: Strictly avoid generating any information not derived from the provided context or general expert knowledge.
 - References: Use only valid and scientific references from reputable sources, avoid using public blogs.
-- Language: Respond exclusively in English.
 - Tone: Maintain a formal, analytical, and authoritative scientific tone throughout.
 
 Structure your final answer as a single JSON object.
@@ -197,8 +197,14 @@ Your response must be structured with the following format:
             "https://example.com/report1.pdf"
             "https://example.com/report2.pdf",
         ],
-        "key_takeaways": "An array of strings containing 3-5 key takeaways from the recommendation, each summarized in a single, short but complete sentence, that encapsulate the essence of the recommendation and its expected impact.",
-        "key_action_items": "An array of strings containing 3-5 key action items, each summarized in a single, very short, imperative sentence, that outlines the immediate steps needed to initiate the recommendation's implementation."
+        "key_takeaways": [ //A liist of strings containing 3-5 key takeaways from the recommendation, each summarized in a single, short but complete sentence, that encapsulate the essence of the recommendation and its expected impact.
+            "Takeaway 1",
+            "Takeaway 2",
+        ],
+        "key_action_items": [ //An array of strings containing 3-5 key action items, each summarized in a single, very short, imperative sentence, that outlines the immediate steps needed to initiate the recommendation's implementation.
+            "Action Item 1",
+            "Action Item 2",
+        ]
         
    }}
  ]
