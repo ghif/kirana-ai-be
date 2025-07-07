@@ -171,8 +171,11 @@ Your response must be structured with the following format:
    {{
      
         "title": "A succinct, policy-oriented title for the recommendation.",
-        "description": "A comprehensive description outlining the policy, its rationale, expected impact, potential implementation considerations (e.g., necessary resources, key stakeholder engagement, and alignment with national development goals), and how it contributes to systemic change.",
+        "description": "A one-sentence description outlining the policy, its rationale, expected impact, potential implementation considerations (e.g., necessary resources, key stakeholder engagement, and alignment with national development goals), and how it contributes to systemic change.",
         "priority": "Assign a clear priority level: 'critical', 'high', 'medium', or 'low'. This reflects the urgency and potential impact.",
+        "strategic_rationale": "A very brief, imperative one-sentence summary of the strategic rationale for this recommendation, linking it to the overall diagnostic and strategic context.",
+        "implementation_approach": [ // A list of 2-3 key implementation approaches, each summarized with 3-5 words, that will be used to execute the recommendation.],
+        "timeline": "An estimated timeline for implementation, e.g., '12-18 months for documentation, 2-3 years for scaling', '6 months pilot, 18 months national rollout'",
         "best_practices": [ // A list of 2 best practices from similar contexts in other countries that have successfully implemented similar policies.
             {{
             "title": "A succint description of the best practice",
@@ -189,16 +192,21 @@ Your response must be structured with the following format:
             "reference": "A URL to a main report or study that provides evidence of the failure case's outcome"
             }},
         ],
-     
-        "key_performance_indicators": "An array of strings representing measurable metrics (e.g., 'Increase in student literacy rates by X%', 'Teacher retention improved by Y%')",
-        "cross_sectoral_linkages": "An array of strings identifying crucial connections and dependencies with other government sectors or national initiatives (e.g., "Public Health for student well-being", "Labor Ministry for vocational training alignment", "Digital Transformation for infrastructure development").",
+        
         "supporting_references": [ //A list of URLs to supporting research, policy papers, international reports (e.g., from OECD, UNESCO, World Bank).
             "https://example.com/report1.pdf"
             "https://example.com/report2.pdf",
-        ]
+        ],
+        "key_takeaways": "An array of strings containing 3-5 key takeaways from the recommendation, each summarized in a single, short but complete sentence, that encapsulate the essence of the recommendation and its expected impact.",
+        "key_action_items": "An array of strings containing 3-5 key action items, each summarized in a single, very short, imperative sentence, that outlines the immediate steps needed to initiate the recommendation's implementation."
+        
    }}
  ]
 }}
 
 Ensure the output is ONLY the JSON object and nothing else.
 """
+
+
+# "key_performance_indicators": "An array of strings representing measurable metrics (e.g., 'Increase in student literacy rates by X%', 'Teacher retention improved by Y%')",
+#         "cross_sectoral_linkages": "An array of strings identifying crucial connections and dependencies with other government sectors or national initiatives (e.g., "Public Health for student well-being", "Labor Ministry for vocational training alignment", "Digital Transformation for infrastructure development").",
