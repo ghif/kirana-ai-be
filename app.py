@@ -9,7 +9,7 @@ if "step" not in st.session_state:
     st.session_state.path = None
 
 def reset():
-    for key in ["step", "path", "country", "challenges", "additional", "planned_reforms", "outcome", "context", "strategy"]:
+    for key in ["step", "path", "language", "country", "challenges", "additional", "planned_reforms", "outcome", "context", "strategy"]:
         if key in st.session_state:
             del st.session_state[key]
     st.session_state.step = 1
@@ -18,7 +18,9 @@ st.title("Strategic Education Diagnostics")
 st.write("Get AI-powered insights and strategic recommendations tailored to your approach.")
 st.write("You can generate recommendations based on emerging issues from your dashboard, or based on a reform you already plan to implement.")
 
+language_options = ["", "English", "中文", "Deutsch", "Français", "Arabic", "Portuguese", "Bahasa Indonesia"]
 country_options = ["", "🇮🇩 Indonesia", "🇿🇦 South Africa", "🇧🇷 Brazil", "🇪🇪 Estonia", "🇵🇱 Poland"]
+
 challenge_options = [
     "Low foundational learning outcomes (18.3% proficiency)",
     "Significant mathematics learning gaps (81.9% below basic level)",
@@ -47,6 +49,13 @@ outcome_options =  [
     "Increase Civic Engagement",
     "Reduce Dropout Rates",
 ]
+
+language = st.selectbox(
+    "Select Language",
+    language_options,
+    format_func=lambda x: x if x else "Choose your language..."
+)
+
 
 country = st.selectbox(
     "Select Country",
@@ -140,7 +149,8 @@ else:
                 "planned_reforms": planned,
                 "expected_outcome": outcome,
                 "add_context": context,
-                "strategy": strategy
+                "strategy": strategy,
+                "language": language
             }
 
             print(f"Inputs for diagnostics: {inputs}")

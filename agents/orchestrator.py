@@ -15,7 +15,6 @@ from langchain_tavily import TavilySearch
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 from langchain.agents import AgentExecutor, create_tool_calling_agent
-
 from templates import SYSTEM_PROMPT_JSON
 
 def is_valid_input(key, inputs):
@@ -113,7 +112,7 @@ def run_diagnostics_with_planned_reforms(inputs):
 
 
     Args:
-        inputs (dict): A dictionary containing the inputs for diagnostics {'country', 'planned_reforms', 'expected_outcome', 'add_context', 'strategy'}.
+        inputs (dict): A dictionary containing the inputs for diagnostics {'country', 'planned_reforms', 'expected_outcome', 'add_context', 'strategy', 'language'}.
 
 
     Returns:
@@ -143,7 +142,8 @@ def run_diagnostics_with_planned_reforms(inputs):
 
     user_prompt = f"Run a diagnostic for the country of {inputs['country']}"
 
-
+    if is_valid_input("language", inputs):
+        user_prompt += f" in {inputs['language']} language"
     if is_valid_input("planned_reforms", inputs):
         user_prompt += f" with planned reforms: {', '.join(inputs['planned_reforms'])}"
     if is_valid_input("expected_outcome", inputs):
@@ -190,7 +190,8 @@ if __name__ == "__main__":
         "planned_reforms": ["Curriculum Reform", "Teacher Reform"],
         "expected_outcome": "Improved student literacy rates",
         "add_context": None,
-        "strategy": "Amplify Existing Strengths"
+        "strategy": "Amplify Existing Strengths",
+        "language": "English"
     }
 
     results = run_diagnostics_with_planned_reforms(inputs)
