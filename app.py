@@ -18,7 +18,7 @@ st.title("Strategic Education Diagnostics")
 st.write("Get AI-powered insights and strategic recommendations tailored to your approach.")
 st.write("You can generate recommendations based on emerging issues from your dashboard, or based on a reform you already plan to implement.")
 
-country_options = ["", "🇮🇩 Indonesia", "🇪🇬 Egypt", "🇧🇷 Brazil", "🇪🇪 Estonia", "🇵🇱 Poland"]
+country_options = ["", "🇮🇩 Indonesia", "🇿🇦 South Africa", "🇧🇷 Brazil", "🇪🇪 Estonia", "🇵🇱 Poland"]
 challenge_options = [
     "Low foundational learning outcomes (18.3% proficiency)",
     "Significant mathematics learning gaps (81.9% below basic level)",
@@ -173,6 +173,13 @@ else:
                 st.markdown(f"### {i+1}. {srec['title']}")
                 st.markdown(f"**Priority**: {srec['priority']}")
                 st.write(f"{srec['description']}")
+
+                st.markdown(f"**Strategic Rationale**: {srec['strategic_rationale']}")
+                # st.markdown(f"**Implementation Approach**: {srec['implementation_approach']}")
+                st.markdown(f"**Implementation Approach**: ")
+                for approach in srec['implementation_approach']:
+                    st.markdown(f"- {approach}")
+                st.markdown(f"**Timeline**: {srec['timeline']}")
                 
                 # Best Practices
                 st.markdown("**Best Practices from Similar Contexts**")
@@ -192,9 +199,17 @@ else:
                         # f"[View Report]({ll['reference']})"
                     )
 
-                # Key Performance Indicators and Cross-Sectoral Linkages
-                st.write(f"**Key performance indicator**: {srec['key_performance_indicators']}")
-                st.write(f"**Cross sectoral linkages**: {srec['cross_sectoral_linkages']}")
+                # st.write(f"**Key Takeaways**: {srec['key_takeaways']}")
+                st.write(f"**Key Takeaways**: ")
+                for takeaway in srec['key_takeaways']:
+                    st.markdown(f"- {takeaway}")
+
+                st.write(f"**Key Action Items**: ")
+                for action in srec['key_action_items']:
+                    st.markdown(f"- {action}")
+                # # Key Performance Indicators and Cross-Sectoral Linkages
+                # st.write(f"**Key performance indicator**: {srec['key_performance_indicators']}")
+                # st.write(f"**Cross sectoral linkages**: {srec['cross_sectoral_linkages']}")
                 
                 # Supporting References
                 st.markdown("**Supporting Academic Research**")
