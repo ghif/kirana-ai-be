@@ -16,6 +16,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from templates import SYSTEM_PROMPT_JSON
+from tools import rag_retrievers as rr
 
 def is_valid_input(key, inputs):
    """
@@ -58,6 +59,7 @@ def run_diagnostics(inputs):
            MessagesPlaceholder(variable_name="messages"),
        ]
    )
+   
    agent_executor = create_react_agent(
        model,
        tools,
@@ -106,7 +108,7 @@ def run_diagnostics(inputs):
 
    return results
 
-def run_diagnostics_with_planned_reforms(inputs):
+def run_diagnostics_with_planned_reforms(inputs, use_tool="vertex_rag"):
     """
     Run diagnostics for a given country with planned reforms and expected outcomes.
 
@@ -120,11 +122,15 @@ def run_diagnostics_with_planned_reforms(inputs):
     """
     # Create an agent
     model = init_chat_model("gemini-2.5-flash", model_provider="google-genai")
-    search = TavilySearch(
-        max_results=5,
-        include_answer=True
-    )
-    tools = [search]
+
+    if use_tool == "tavily":
+        search = TavilySearch(
+            max_results=5,
+            include_answer=True
+        )
+        tools = [search]
+    elif use_tool == "vertex_rag":
+        tools = [rr.retrieve_from_vertex_rag_engine]
 
 
     system_prompt = ChatPromptTemplate.from_messages(
@@ -133,12 +139,12 @@ def run_diagnostics_with_planned_reforms(inputs):
             MessagesPlaceholder(variable_name="messages"),
         ]
     )
+
     agent_executor = create_react_agent(
         model,
         tools,
         prompt=system_prompt
     )
-
 
     user_prompt = f"Run a diagnostic for the country of {inputs['country']}"
 
@@ -153,6 +159,9 @@ def run_diagnostics_with_planned_reforms(inputs):
     if is_valid_input("strategy", inputs):
         user_prompt += f" using the strategic approach: {inputs['strategy']}"
 
+    if use_tool == "vertex_rag":
+        user_prompt += "\nMake sure that all the cited and retrieved documents (including for 'best_practices' and 'lesson_learned') and the diagnostic insights are taken from the Vertex RAG Engine -- no citation outside of the RAG corpus is allowed."
+
 
     # Use the agent
     config = {"configurable": {"thread_id": "abc123"}}  # will be useful for session memory and async execution
@@ -166,7 +175,6 @@ def run_diagnostics_with_planned_reforms(inputs):
     results = agent_executor.invoke(
         {"messages": [input_message]}, config
     )
-
 
     return results
 
@@ -194,5 +202,15 @@ if __name__ == "__main__":
         "language": "English"
     }
 
-    results = run_diagnostics_with_planned_reforms(inputs)
-    print(results)  # Print the diagnostics result
+    results = run_diagnostics_with_planned_reforms(inputs, use_tool="vertex_rag")
+    # print(results)  # Print the diagnostics result
+    print("Diagnostics Results:")
+    for message in results['messages']:
+        message.pretty_print()
+
+    # query = "summarize the latest research on education aid"
+
+    # serialized_docs = rr.retrieve_from_vertex_rag_engine(query)
+
+    
+

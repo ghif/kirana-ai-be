@@ -155,7 +155,7 @@ else:
 
             print(f"Inputs for diagnostics: {inputs}")
 
-            results = run_diagnostics_with_planned_reforms(inputs)
+            results = run_diagnostics_with_planned_reforms(inputs, use_tool="vertex_rag")
             # Parse the results
             outputs = utils.parse_json_string(results['messages'][-1].content)
 
